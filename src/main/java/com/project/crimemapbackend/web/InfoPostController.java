@@ -21,6 +21,11 @@ public class InfoPostController {
     @Autowired
     private InfoPostService infoPostService;
 
+    @GetMapping("/")
+    public String main() {
+        return "main page";
+    }
+
     // get all infoPosts
     @GetMapping("/Community")
     public List<InfoPostResponseDto> getAllInfoPosts() { return infoPostService.findAll(); };
