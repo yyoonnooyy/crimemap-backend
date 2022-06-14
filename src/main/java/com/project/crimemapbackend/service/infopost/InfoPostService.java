@@ -2,6 +2,7 @@ package com.project.crimemapbackend.service.infopost;
 
 import com.project.crimemapbackend.domain.infopost.InfoPost;
 import com.project.crimemapbackend.domain.infopost.InfoPostRepository;
+import com.project.crimemapbackend.web.dto.InfoPostCreateRequestDto;
 import com.project.crimemapbackend.web.dto.InfoPostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,19 @@ import java.util.stream.Collectors;
 @Service
 public class InfoPostService {
     private final InfoPostRepository infoPostRepository;
+    //private final InfoPost infoPost;
 
     // Create
-    public InfoPost createBoard(@RequestBody InfoPost info_post) {
-        return infoPostRepository.save(info_post);
+    @Transactional
+    public Integer createInfoPost(@RequestBody InfoPostCreateRequestDto requestDto) {
+        return infoPostRepository.save(requestDto.toEntity()).getPost_num();
     }
 
-    // Read
+    /*public InfoPost createInfoPost(@RequestBody InfoPost info_post) {
+        return infoPostRepository.save(info_post);
+    }*/
+
+    // Read all infoposts
     @Transactional(readOnly = true)
     public List<InfoPostResponseDto> findAll() {
         return infoPostRepository.findAll().stream()
@@ -30,9 +37,19 @@ public class InfoPostService {
                 .collect(Collectors.toList());
     }
 
+    // Read detail Infopost
+    @Transactional(readOnly = true)
+    public InfoPostResponseDto searchByNum(Integer post_num) {
+        InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
+                -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+
+        return new InfoPostResponseDto(infoPost);
+    }
+
     // Update
 
 
     // Delete
+
 
 }
