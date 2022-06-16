@@ -24,12 +24,15 @@ public class InfoPostController {
     @Autowired
     private InfoPostService infoPostService;
 
+    /*
     @GetMapping("/")
     public String main() {
         return "main page";
     }
 
-    // Create infoPosts
+     */
+
+    // Create infopost
     @PostMapping("/InfoPost")
     public Integer save(@RequestBody InfoPostCreateRequestDto dto) {
         return infoPostService.createInfoPost(dto);
@@ -40,14 +43,19 @@ public class InfoPostController {
     public List<InfoPostResponseDto> getAllInfoPosts() {
         return infoPostService.findAll(); };
 
-    @GetMapping("/APItest")
-    public List<InfoPostResponseDto> getAllInfoPosts_test() {
-        return infoPostService.findAll(); };
-
     // Read detail infoost
     @GetMapping("/InfoPost/{post_num}")
     public InfoPostResponseDto getDetailInfoPosts(@PathVariable Integer post_num) {
         return infoPostService.searchByNum(post_num);
+    }
+
+    // Update infopost
+    
+
+    // Delete infopost
+    @DeleteMapping("/InfoPost/{post_num}")
+    public void delete(@PathVariable Integer post_num) {
+        infoPostService.delete(post_num);
     }
 
 

@@ -19,15 +19,11 @@ public class InfoPostService {
     private final InfoPostRepository infoPostRepository;
     //private final InfoPost infoPost;
 
-    // Create
+    // Create infopost
     @Transactional
     public Integer createInfoPost(@RequestBody InfoPostCreateRequestDto requestDto) {
         return infoPostRepository.save(requestDto.toEntity()).getPost_num();
     }
-
-    /*public InfoPost createInfoPost(@RequestBody InfoPost info_post) {
-        return infoPostRepository.save(info_post);
-    }*/
 
     // Read all infoposts
     @Transactional(readOnly = true)
@@ -50,6 +46,12 @@ public class InfoPostService {
 
 
     // Delete
+    @Transactional
+    public void delete(Integer post_num) {
+        InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
+                -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
 
+        infoPostRepository.delete(infoPost);
+    }
 
 }
