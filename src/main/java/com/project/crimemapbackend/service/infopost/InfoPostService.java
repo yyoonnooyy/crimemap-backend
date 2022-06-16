@@ -4,6 +4,7 @@ import com.project.crimemapbackend.domain.infopost.InfoPost;
 import com.project.crimemapbackend.domain.infopost.InfoPostRepository;
 import com.project.crimemapbackend.web.dto.InfoPostCreateRequestDto;
 import com.project.crimemapbackend.web.dto.InfoPostResponseDto;
+import com.project.crimemapbackend.web.dto.InfoPostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,17 @@ public class InfoPostService {
     }
 
     // Update
+    @Transactional
+    public Integer update(Integer post_num, InfoPostUpdateRequestDto requestDto) {
+        InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
+                -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
 
+        infoPost.update(requestDto.getTitle(),
+                requestDto.getContent(),
+                requestDto.getFixTime());
+
+        return post_num;
+    }
 
     // Delete
     @Transactional

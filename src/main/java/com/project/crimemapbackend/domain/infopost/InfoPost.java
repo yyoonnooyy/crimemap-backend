@@ -42,4 +42,10 @@ public class InfoPost {
         this.regTime = regTime;
         this.fixTime = fixTime;
     }
+
+    public void update(String title, String content, LocalDate fixTime) {
+        this.title = title;
+        this.content = content;
+        this.fixTime = fixTime;
+    }
 }
