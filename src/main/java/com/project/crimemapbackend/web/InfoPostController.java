@@ -40,6 +40,10 @@ public class InfoPostController {
     public List<InfoPostResponseDto> getAllInfoPosts() {
         return infoPostService.findAll(); };
 
+    @GetMapping("/APItest")
+    public List<InfoPostResponseDto> getAllInfoPosts_test() {
+        return infoPostService.findAll(); };
+
     // Read detail infoost
     @GetMapping("/InfoPost/{post_num}")
     public InfoPostResponseDto getDetailInfoPosts(@PathVariable Integer post_num) {
