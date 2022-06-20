@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://crimemap-web.herokuapp.com")
+@CrossOrigin(origins = "http://crimemap-web.herokuapp.com")
 @RequiredArgsConstructor
 @Controller
 @RestController

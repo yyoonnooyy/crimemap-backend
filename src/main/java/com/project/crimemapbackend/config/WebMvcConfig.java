@@ -14,6 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
                 .allowedOrigins("https://crimemap-web.herokuapp.com")
+                .allowedOrigins("http://crimemap-web.herokuapp.com")
                 // GET, POST, PUT, PATCH, DELETE, OPTIONS 메서드 허용
                 .allowedMethods("GET", "POST","PUT","PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
