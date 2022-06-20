@@ -1,11 +1,8 @@
 package com.project.crimemapbackend.web;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.project.crimemapbackend.domain.infopost.InfoPost;
+import com.project.crimemapbackend.service.image.ImageService;
 import com.project.crimemapbackend.service.infopost.InfoPostService;
-import com.project.crimemapbackend.web.dto.InfoPostCreateRequestDto;
-import com.project.crimemapbackend.web.dto.InfoPostResponseDto;
-import com.project.crimemapbackend.web.dto.InfoPostUpdateRequestDto;
+import com.project.crimemapbackend.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://crimemap-web.herokuapp.com")
 @RequiredArgsConstructor
 @Controller
 @RestController
 public class InfoPostController {
 
     @Autowired
-    private InfoPostService infoPostService;
-
-    /*
-    @GetMapping("/")
-    public String main() {
-        return "main page";
-    }
-
-     */
+    private final InfoPostService infoPostService;
+    private final ImageService imageService;
 
     // Create infopost
     @PostMapping("/InfoPost")
@@ -39,15 +28,26 @@ public class InfoPostController {
         return infoPostService.createInfoPost(dto);
     }
 
+    // Create infopost image
+    @PostMapping("/InfoPost/Image")
+    public String save(@RequestBody ImageCreateRequestDto dto) {
+        return imageService.createImage(dto);}
+
     // Read all infoposts
-    @GetMapping("/Community")
+    @GetMapping("/Community/InfoPost")
     public List<InfoPostResponseDto> getAllInfoPosts() {
         return infoPostService.findAll(); };
 
     // Read detail infoost
     @GetMapping("/InfoPost/{post_num}")
-    public InfoPostResponseDto getDetailInfoPosts(@PathVariable Integer post_num) {
+    public InfoPostResponseDto getDetailInfoPost(@PathVariable Integer post_num) {
         return infoPostService.searchByNum(post_num);
+    }
+
+    // Read detail infopost image
+    @GetMapping("/InfoPost/Image/{img_id}")
+    public ImageResponseDto getDetailInfoPostImage(@PathVariable String img_id) {
+        return imageService.searchByNum(img_id);
     }
 
     // Update infopost
@@ -61,6 +61,17 @@ public class InfoPostController {
     public String delete(@PathVariable Integer post_num) {
         infoPostService.delete(post_num);
         return "success DELETE infopost(post_num: "+post_num+")";
+    }
+
+    // Read detail missingpost
+
+    // Read all missingposts image
+
+    // Delete image
+    @DeleteMapping("/InfoPost/Image/{img_id}")
+    public String delete(@PathVariable String img_id) {
+        imageService.delete(img_id);
+        return "success DELETE infopost image";
     }
 
 

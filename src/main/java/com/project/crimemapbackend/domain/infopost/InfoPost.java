@@ -1,5 +1,6 @@
 package com.project.crimemapbackend.domain.infopost;
 
+import com.mysql.cj.jdbc.Blob;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -25,6 +25,9 @@ public class InfoPost {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
+    @Column(name = "region", length = 50, nullable = false)
+    private String region;
+
     @Column(name = "content", length = 3000, nullable = false)
     private String content;
 
@@ -34,17 +37,23 @@ public class InfoPost {
     @Column(name = "fix_time", nullable = false)
     private LocalDate fixTime;
 
+    @Column(name = "flag", nullable = false)
+    private String flag;
+
     @Builder
-    public InfoPost(Integer post_num, String title, String content, LocalDate regTime, LocalDate fixTime) {
+    public InfoPost(Integer post_num, String title, String region, String content, LocalDate regTime, LocalDate fixTime, String flag) {
         this.post_num = post_num;
         this.title = title;
+        this.region = region;
         this.content = content;
         this.regTime = regTime;
         this.fixTime = fixTime;
+        this.flag = flag;
     }
 
-    public void update(String title, String content, LocalDate fixTime) {
+    public void update(String title, String region, String content, LocalDate fixTime) {
         this.title = title;
+        this.region = region;
         this.content = content;
         this.fixTime = fixTime;
     }

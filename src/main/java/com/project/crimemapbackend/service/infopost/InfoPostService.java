@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class InfoPostService {
     private final InfoPostRepository infoPostRepository;
-    //private final InfoPost infoPost;
 
     // Create infopost
     @Transactional
@@ -34,7 +33,7 @@ public class InfoPostService {
                 .collect(Collectors.toList());
     }
 
-    // Read detail Infopost
+    // Read detail infopost
     @Transactional(readOnly = true)
     public InfoPostResponseDto searchByNum(Integer post_num) {
         InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
@@ -43,20 +42,21 @@ public class InfoPostService {
         return new InfoPostResponseDto(infoPost);
     }
 
-    // Update
+    // Update infopost
     @Transactional
     public Integer update(Integer post_num, InfoPostUpdateRequestDto requestDto) {
         InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
                 -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
 
         infoPost.update(requestDto.getTitle(),
+                requestDto.getRegion(),
                 requestDto.getContent(),
                 requestDto.getFixTime());
 
         return post_num;
     }
 
-    // Delete
+    // Delete infopost
     @Transactional
     public void delete(Integer post_num) {
         InfoPost infoPost = infoPostRepository.findById(post_num).orElseThrow(()
